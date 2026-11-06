@@ -1,0 +1,26 @@
+{
+    "invoice_number": "DEMO-027",
+    "invoice_date": "2026-11-06",
+    "seller_name": "Demo Export Company",
+    "buyer_name": "Demo Import Company",
+    "currency": "INR",
+    "total_amount": "52600",
+    "origin_country": "China",
+    "destination_country": "India",
+    "items": [
+        {
+            "item_name": "Copper Cathodes",
+            "hs_code": "740311",
+            "quantity": "2",
+            "unit_price": "800",
+            "total_price": "160"
+        },
+        {
+            "item_name": "Steel Bars",
+            "hs_code": "721420",
+            "quantity": "10",
+            "unit_price": "71",
+            "total_price": "700"
+        }
+    ]
+}

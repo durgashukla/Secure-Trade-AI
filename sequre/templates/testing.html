@@ -1,0 +1,551 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Trade Risk Analysis | Secure Trade AI</title>
+
+    <link rel="stylesheet" href="{% static 'sequre/testing.css' %}">
+
+    <style>
+        .testing-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .dashboard-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 11px 17px;
+            background: #17365d;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .dashboard-btn:hover {
+            background: #244d7a;
+            transform: translateY(-2px);
+        }
+
+        @media(max-width: 600px) {
+            .header-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .dashboard-btn {
+                font-size: 12px;
+                padding: 10px 13px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+<main class="testing-container">
+
+    <!-- PAGE HEADER -->
+    <header class="testing-header">
+
+        <div class="header-content">
+            <span class="page-eyebrow">TRADE COMPLIANCE / ANALYSIS</span>
+
+            <h1>Trade Risk Analysis</h1>
+
+            <p>
+                Invoice verification and customs risk assessment
+            </p>
+        </div>
+
+        <!-- HEADER ACTIONS -->
+        <div class="header-actions">
+
+            <a href="{% url 'dashboard' %}" class="dashboard-btn">
+                ← Back to Dashboard
+            </a>
+
+            <div class="header-tag">
+                <span class="header-dot"></span>
+                SECURE TRADE AI
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- SECTION 1: INVOICE OVERVIEW -->
+    <section class="analysis-section" id="invoice-overview">
+
+        <div class="section-heading">
+            <div>
+                <span class="section-label">OVERVIEW</span>
+                <h2>Invoice Overview</h2>
+                <p>Invoice risk visualization and product details</p>
+            </div>
+        </div>
+
+
+        <div class="overview-grid">
+
+            <!-- RISK VISUALIZATION -->
+            <article class="overview-card">
+
+                <div class="card-heading">
+                    <div>
+                        <span class="card-label">RISK ANALYTICS</span>
+                        <h3>Risk Visualization</h3>
+                    </div>
+                </div>
+
+                <div class="risk-chart">
+
+                    {% if chart_path %}
+
+                        <img
+                            src="{{ chart_path }}"
+                            alt="Invoice Risk Gauge"
+                        >
+
+                    {% else %}
+
+                        <div class="empty-state">
+                            <p>Risk chart not available.</p>
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </article>
+
+
+            <!-- PRODUCT DETAILS -->
+            <article class="overview-card">
+
+                <div class="card-heading">
+                    <div>
+                        <span class="card-label">INVOICE INFORMATION</span>
+                        <h3>Product Details</h3>
+                    </div>
+                </div>
+
+                <div class="product-details-grid">
+
+                    <div class="product-detail">
+                        <span>Invoice Number</span>
+                        <strong>{{ data.invoice_number|default:"N/A" }}</strong>
+                    </div>
+
+                    <div class="product-detail">
+                        <span>Seller Name</span>
+                        <strong>{{ data.seller_name|default:"N/A" }}</strong>
+                    </div>
+
+                    <div class="product-detail">
+                        <span>Buyer Name</span>
+                        <strong>{{ data.buyer_name|default:"N/A" }}</strong>
+                    </div>
+
+                    <div class="product-detail">
+                        <span>Country of Export</span>
+                        <strong>{{ data.origin_country|default:"N/A" }}</strong>
+                    </div>
+
+                </div>
+
+                <div class="invoice-products-heading">
+                    <h4>Invoice Items</h4>
+                    <span>{{ data.items|length }} Products</span>
+                </div>
+
+                <ul class="invoice-item-list">
+
+                    {% for name in data.items %}
+
+                        <li class="invoice-item">
+
+                            <div class="item-info">
+                                <span class="item-number">
+                                    {{ forloop.counter }}
+                                </span>
+
+                                <span class="item-name">
+                                    {{ name.item_name }}
+                                </span>
+                            </div>
+
+                            <span class="item-arrow">→</span>
+
+                        </li>
+
+                    {% empty %}
+
+                        <li class="empty-state">
+                            No invoice items found.
+                        </li>
+
+                    {% endfor %}
+
+                </ul>
+
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <!-- SECTION 2: RISK FINDINGS -->
+    <section class="analysis-section" id="risk-findings">
+
+        <div class="section-heading">
+            <div>
+                <span class="section-label">RISK MONITORING</span>
+                <h2>Risk Findings & Verification</h2>
+                <p>Detected risks and required verification actions</p>
+            </div>
+        </div>
+
+
+        {% if risk_report.risk_reasons %}
+
+            <div class="risk-findings-list">
+
+                {% for reason in risk_report.risk_reasons %}
+
+                    <article class="risk-finding-card">
+
+                        <div class="risk-icon">!</div>
+
+                        <div class="risk-finding-content">
+
+                            <h3>
+                                Risk Finding {{ forloop.counter }}
+                            </h3>
+
+                            <p>{{ reason }}</p>
+
+                        </div>
+
+                        <span class="risk-flag">
+                            <span class="status-dot"></span>
+                            Detected
+                        </span>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="no-risk-message">
+                <span class="success-icon">✓</span>
+                <p>No risk flags found in the current checks.</p>
+            </div>
+
+        {% endif %}
+
+    </section>
+
+
+    <!-- SECTION 3: HS CODE & CUSTOMS DUTY -->
+    <section class="analysis-section" id="customs-assessment">
+
+        <div class="section-heading">
+            <div>
+                <span class="section-label">PRODUCT CLASSIFICATION</span>
+
+                <h2>HS Code & Customs Duty Assessment</h2>
+
+                <p>
+                    Product classification and calculated import duties and taxes
+                </p>
+            </div>
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table class="assessment-table">
+
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>HS Code</th>
+                        <th>Assessable Value</th>
+                        <th>Calculated Duty & Taxes</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for result in tariff_result %}
+
+                        <tr>
+
+                            <td class="product-name">
+                                {{ result.item_name }}
+                            </td>
+
+                            <td>
+                                {% if result.hs_code %}
+                                    <span class="hs-code">
+                                        {{ result.hs_code }}
+                                    </span>
+                                {% else %}
+                                    <span class="missing-value">
+                                        Missing
+                                    </span>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                {% if result.tariff_found %}
+                                    ₹{{ result.assessable_value }}
+                                {% else %}
+                                    <span class="missing-value">
+                                        Not Available
+                                    </span>
+                                {% endif %}
+                            </td>
+
+                            <td class="duty-value">
+                                {% if result.tariff_found %}
+                                    ₹{{ result.total_duty }}
+                                {% else %}
+                                    <span class="missing-value">
+                                        Not Available
+                                    </span>
+                                {% endif %}
+                            </td>
+
+                        </tr>
+
+                    {% empty %}
+
+                        <tr>
+                            <td colspan="4" class="empty-table">
+                                No invoice items found.
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- SECTION 4: FINAL DUTY ASSESSMENT -->
+    <section class="analysis-section" id="final-duty">
+
+        <div class="section-heading">
+            <div>
+                <span class="section-label">FINANCIAL SUMMARY</span>
+
+                <h2>Final Duty Assessment</h2>
+
+                <p>
+                    Total calculated import duty and taxes for the entire invoice
+                </p>
+            </div>
+        </div>
+
+
+        <div class="final-duty-card">
+
+            <div class="duty-card-content">
+
+                <span class="duty-card-label">
+                    TOTAL IMPORT DUTY & TAXES
+                </span>
+
+                <h2>
+                    ₹{{ total_customs_duty|floatformat:2 }}
+                </h2>
+
+                <p>Entire Invoice</p>
+
+            </div>
+
+            <div class="duty-card-icon">₹</div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SECTION 5: FINAL OFFICER DECISION -->
+    <section class="analysis-section" id="officer-decision">
+
+        <div class="section-heading">
+
+            <div>
+                <span class="section-label">FINAL REVIEW</span>
+
+                <h2>Final Officer Decision</h2>
+
+                <p>
+                    Review the analysis and update invoice status
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="decision-container">
+
+            <div class="current-status">
+
+                <span class="status-label">
+                    CURRENT INVOICE STATUS
+                </span>
+
+                <h3>
+                    {{ saved_invoice.get_status_display }}
+                </h3>
+
+            </div>
+
+
+            <!-- STATUS UPDATE FORM -->
+            <form
+                method="POST"
+                action="{% url 'update_invoice_status' saved_invoice.id %}"
+            >
+
+                {% csrf_token %}
+
+                <div class="decision-buttons">
+
+                    <button
+                        type="submit"
+                        name="status"
+                        value="clear"
+                        class="decision-btn clear-btn"
+                    >
+                        <span>✓</span>
+                        Clear
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        name="status"
+                        value="pending"
+                        class="decision-btn pending-btn"
+                    >
+                        <span>◷</span>
+                        Pending
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        name="status"
+                        value="on_hold"
+                        class="decision-btn hold-btn"
+                    >
+                        <span>Ⅱ</span>
+                        On Hold
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        name="status"
+                        value="fraud"
+                        class="decision-btn fraud-btn"
+                    >
+                        <span>!</span>
+                        Fraud
+                    </button>
+
+                </div>
+
+            </form>
+
+
+            <!-- PDF DOWNLOAD OPTION -->
+            {% if saved_invoice.status == "clear" %}
+
+                <div class="certificate-download">
+
+                    <div class="certificate-info">
+
+                        <span class="certificate-icon">📄</span>
+
+                        <div>
+                            <h3>Clearance Certificate Ready</h3>
+
+                            <p>
+                                This invoice has been successfully cleared.
+                                Your clearance certificate is ready.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <a
+                        href="{% url 'download_clearance_certificate' saved_invoice.id %}"
+                        class="download-certificate-btn"
+                    >
+                        <span>↓</span>
+                        Download Clearance Certificate (PDF)
+                    </a>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer class="testing-footer">
+
+        <p>
+            Secure Trade AI
+            <span>•</span>
+            Trade Risk & Compliance Analysis
+        </p>
+
+    </footer>
+
+</main>
+
+</body>
+</html>

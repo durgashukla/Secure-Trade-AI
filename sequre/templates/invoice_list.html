@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice List</title>
+</head>
+<body>
+
+    <h1>{{ status|title }} Invoices</h1>
+
+    {% for invoice in invoices %}
+        <hr>
+
+        <h3>Invoice Number: {{ invoice.invoice_number }}</h3>
+        <p>Seller: {{ invoice.seller_name }}</p>
+        <p>Buyer: {{ invoice.buyer_name }}</p>
+        <p>Date: {{ invoice.invoice_date }}</p>
+        <p>Amount: {{ invoice.currency }} {{ invoice.total_amount }}</p>
+        <p>Status: {{ invoice.get_status_display }}</p>
+
+        <a href="{% url 'invoice_detail' invoice.id %}">
+            View Invoice Details
+        </a>
+
+    {% empty %}
+        <p>No invoices found in this category.</p>
+    {% endfor %}
+
+    <hr>
+    <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+
+</body>
+</html>

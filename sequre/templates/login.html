@@ -1,0 +1,155 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Trade AI | Login</title>
+
+    <link rel="stylesheet" href="{% static 'sequre/auth.css' %}">
+</head>
+
+<body>
+
+<div class="auth-container">
+
+    <!-- LEFT BRANDING SECTION -->
+    <div class="brand-section">
+
+        <div class="brand-logo">
+            <div class="logo-icon">ST</div>
+            <span>Secure Trade <b>AI</b></span>
+        </div>
+
+        <div class="brand-content">
+            <span class="tagline">INTELLIGENT TRADE SECURITY</span>
+
+            <h1>Smarter Trade.<br>
+                <span>Safer Decisions.</span>
+            </h1>
+
+            <p>
+                An intelligent platform for customs verification,
+                invoice analysis and secure international trade.
+            </p>
+
+            <div class="feature-list">
+                <div>✓ AI-Powered Invoice Analysis</div>
+                <div>✓ Customs Duty Assessment</div>
+                <div>✓ Fraud & Risk Detection</div>
+            </div>
+        </div>
+
+        <div class="brand-footer">
+            © 2026 Secure Trade AI. All rights reserved.
+        </div>
+
+    </div>
+
+
+    <!-- RIGHT LOGIN SECTION -->
+    <div class="form-section">
+
+        <div class="form-wrapper">
+
+            <div class="mobile-logo">
+                <div class="logo-icon">ST</div>
+                <span>Secure Trade <b>AI</b></span>
+            </div>
+
+            <div class="form-heading">
+                <span class="welcome-label">WELCOME BACK</span>
+                <h2>Sign in to your account</h2>
+                <p>Enter your credentials to access your dashboard.</p>
+            </div>
+
+            {% if error %}
+                <div class="error-message">
+                    {{ error }}
+                </div>
+            {% endif %}
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Enter your username"
+                        required
+                    >
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Password</label>
+
+                    <div class="password-wrapper">
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="toggle-password"
+                            onclick="togglePassword()"
+                        >
+                            Show
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-options">
+                    <label class="remember-label">
+                        <input type="checkbox" name="remember_me">
+                        <span>Remember me</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="login-btn">
+                    Sign In <span>→</span>
+                </button>
+
+            </form>
+
+            <div class="register-link">
+                Don't have an account?
+                <a href="{% url 'register' %}">Create account</a>
+            </div>
+
+            <div class="security-note">
+                <span>🔒</span>
+                Your information is protected and secure.
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+function togglePassword() {
+    const password = document.getElementById("password");
+    const button = document.querySelector(".toggle-password");
+
+    if (password.type === "password") {
+        password.type = "text";
+        button.textContent = "Hide";
+    } else {
+        password.type = "password";
+        button.textContent = "Show";
+    }
+}
+</script>
+
+</body>
+</html>

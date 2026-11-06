@@ -1,0 +1,382 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Account | Secure Trade AI</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6fa;
+            color: #1e293b;
+            padding: 35px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 27px;
+            color: #172554;
+        }
+
+        .header p {
+            color: #64748b;
+            margin-top: 7px;
+            font-size: 14px;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: #fff;
+            background: #1e3a5f;
+            padding: 11px 18px;
+            border-radius: 7px;
+            font-size: 13px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 22px;
+            border: 1px solid #e5eaf1;
+            box-shadow: 0 3px 12px rgba(0,0,0,.03);
+        }
+
+        .card h2 {
+            font-size: 18px;
+            margin-bottom: 22px;
+            color: #172554;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .avatar {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            background: #e8eef9;
+            color: #1e3a5f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .profile h3 {
+            font-size: 20px;
+            margin-bottom: 6px;
+        }
+
+        .profile p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 28px;
+        }
+
+        .detail-label {
+            color: #64748b;
+            font-size: 12px;
+            margin-bottom: 7px;
+        }
+
+        .detail-value {
+            font-size: 14px;
+            font-weight: 600;
+            word-break: break-word;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .stat-box {
+            padding: 22px;
+            border-radius: 10px;
+            background: #f8fafc;
+            border: 1px solid #e5eaf1;
+        }
+
+        .stat-box h3 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .stat-box p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .blue { color: #2563eb; }
+        .green { color: #16a34a; }
+        .orange { color: #d97706; }
+
+        .setting {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 17px 0;
+            border-bottom: 1px solid #edf0f5;
+        }
+
+        .setting:last-child {
+            border-bottom: none;
+        }
+
+        .setting h3 {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .setting p {
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .action {
+            text-decoration: none;
+            color: #2563eb;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .logout-btn {
+            background: #fff;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+            padding: 11px 20px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .logout-btn:hover {
+            background: #fef2f2;
+        }
+
+        .message {
+            padding: 12px;
+            background: #dcfce7;
+            color: #166534;
+            border-radius: 7px;
+            margin-bottom: 18px;
+        }
+
+        @media(max-width: 650px) {
+            body { padding: 18px; }
+
+            .header {
+                align-items: flex-start;
+                gap: 15px;
+                flex-direction: column;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <div>
+            <h1>My Account</h1>
+            <p>Manage your profile and account settings.</p>
+        </div>
+
+        <a href="{% url 'dashboard' %}" class="back-btn">
+            Back to Dashboard
+        </a>
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- PROFILE INFORMATION -->
+
+    <div class="card">
+
+        <h2>Profile Information</h2>
+
+        <div class="profile">
+
+            <div class="avatar">
+                {{ user.username|first|upper }}
+            </div>
+
+            <div>
+                <h3>
+                    {{ user.get_full_name|default:user.username }}
+                </h3>
+
+                <p>@{{ user.username }}</p>
+            </div>
+
+        </div>
+
+        <div class="details">
+
+            <div>
+                <p class="detail-label">Full Name</p>
+                <p class="detail-value">
+                    {{ user.get_full_name|default:"Not provided" }}
+                </p>
+            </div>
+
+            <div>
+                <p class="detail-label">Username</p>
+                <p class="detail-value">{{ user.username }}</p>
+            </div>
+
+            <div>
+                <p class="detail-label">Email Address</p>
+                <p class="detail-value">
+                    {{ user.email|default:"Not provided" }}
+                </p>
+            </div>
+
+            <div>
+                <p class="detail-label">Date Joined</p>
+                <p class="detail-value">
+                    {{ user.date_joined|date:"d M Y" }}
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ACCOUNT STATISTICS -->
+
+    <div class="card">
+
+        <h2>Account Statistics</h2>
+
+        <div class="stats">
+
+            <div class="stat-box">
+                <h3 class="blue">{{ total_invoices }}</h3>
+                <p>Total Invoices</p>
+            </div>
+
+            <div class="stat-box">
+                <h3 class="green">{{ cleared_invoices }}</h3>
+                <p>Cleared Invoices</p>
+            </div>
+
+            <div class="stat-box">
+                <h3 class="orange">{{ pending_invoices }}</h3>
+                <p>Pending Invoices</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ACCOUNT SETTINGS -->
+
+    <div class="card">
+
+        <h2>Account Settings</h2>
+
+        <div class="setting">
+
+            <div>
+                <h3>Edit Profile</h3>
+                <p>Update your personal information.</p>
+            </div>
+
+            <a href="{% url 'edit_profile' %}" class="action">
+                Edit Profile →
+            </a>
+
+        </div>
+
+        <div class="setting">
+
+            <div>
+                <h3>Change Password</h3>
+                <p>Update your account password securely.</p>
+            </div>
+
+            <a href="{% url 'change_password' %}" class="action">
+                Change Password →
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- LOGOUT -->
+
+    <div class="card">
+
+        <h2>Logout</h2>
+
+        <div class="setting">
+
+            <div>
+                <h3>Sign out of your account</h3>
+                <p>Your session will be securely terminated.</p>
+            </div>
+
+            <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+
+                <button type="submit" class="logout-btn">
+                    Logout
+                </button>
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,218 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Secure Trade AI | Dashboard</title>
+
+    <link rel="stylesheet" href="{% static 'sequre/style.css' %}">
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="logo">
+            <h2>🛡 Secure Trade AI</h2>
+        </div>
+
+        <nav>
+            <a href="{% url 'dashboard' %}" class="nav-link active">🏠 Dashboard</a>
+            <a href="{% url 'upload_invoice' %}" class="nav-link">📤 Upload Invoice</a>
+            <a href="{% url 'view_invoice' %}" class="nav-link">📄 Invoices History</a>
+            <a href="{% url 'testing_view' %}" class="nav-link">🔍 Invoice Testing</a>
+            
+            <a href="{% url 'account' %}" class="nav-link">👤 Account</a>
+           <form method="POST" action="{% url 'logout' %}">
+    {% csrf_token %}
+
+    <button type="submit"
+        style="background:#142b4a;
+        color:#cbd5e1;
+        border:none;
+        padding:14px;
+        width:100%;
+        text-align:left;
+        font-size:16px;
+        cursor:pointer;">
+        🚪 Logout
+    </button>
+</form>
+        </nav>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Top Navbar -->
+        <header class="topbar">
+
+            <button id="menuBtn" class="menu-btn">☰</button>
+
+            <div>
+                <h2>Dashboard</h2>
+                <p>Welcome to Secure Trade </p>
+            </div>
+
+            <div class="topbar-right">
+                <span>🔔</span>
+                <span class="user-profile">{{ request.user.username }}</span>
+            </div>
+
+        </header>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+            <form method="GET" action="{% url 'search_invoice' %}">
+                <input type="text"
+                    name="invoice_number"
+                    placeholder="🔍 Search by Invoice Number..."
+                    required>
+                <button type="submit">Search</button>
+            </form>
+        </div>
+
+
+        <!-- Summary Cards -->
+        <section class="summary-section">
+
+            <div class="summary-card total-card">
+                <h3>Total Invoices Today</h3>
+                <h1>{{ clear_count|add:pending_count|add:on_hold_count|add:fraud_count }}</h1>
+                <p>Today's invoice records</p>
+            </div>
+
+            <div class="summary-card clear-card">
+                <h3>Clear Invoices</h3>
+                <h1>{{ clear_count }}</h1>
+                <a href="{% url 'invoice_list' 'clear' %}">View Details →</a>
+            </div>
+
+            <div class="summary-card pending-card">
+                <h3>Pending Invoices</h3>
+                <h1>{{ pending_count }}</h1>
+                <a href="{% url 'invoice_list' 'pending' %}">View Details →</a>
+            </div>
+
+            <div class="summary-card fraud-card">
+                <h3>Fraud Invoices</h3>
+                <h1>{{ fraud_count }}</h1>
+                <a href="{% url 'invoice_list' 'fraud' %}">View Details →</a>
+            </div>
+
+        </section>
+
+
+        <!-- Charts -->
+        <section class="charts-section">
+
+            <div class="chart-card">
+                <h3>Weekly Invoice Analysis</h3>
+                <img src="{{ weekly_chart_path }}" alt="Weekly Invoice Chart">
+            </div>
+
+            <div class="chart-card">
+                <h3>Invoice Risk Distribution</h3>
+                <img src="{{ chart_path }}" alt="Invoice Risk Chart">
+            </div>
+
+        </section>
+
+
+        <!-- Recent Invoices -->
+        <section class="recent-section">
+
+
+            <!-- Section Heading -->
+            <div class="section-heading">
+                <h2>Today's Recent Invoices</h2>
+                <a href="{% url 'view_invoice' %}">View All →</a>
+            </div>
+
+
+            <!-- Invoice Table -->
+            <div class="table-container">
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Invoice Number</th>
+                            <th>Seller</th>
+                            <th>Buyer</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                    {% for invoice in today_invoices %}
+
+                        <tr>
+                            <td>{{ invoice.invoice_number }}</td>
+                            <td>{{ invoice.seller_name }}</td>
+                            <td>{{ invoice.buyer_name }}</td>
+                            <td>{{ invoice.invoice_date }}</td>
+                        
+                            <td>
+                                <span class="status-badge status-{{ invoice.status }}">
+                                    {{ invoice.get_status_display }}
+                                </span>
+                            </td>
+
+                            <td>
+                                <a class="view-btn" href="{% url 'invoice_detail' invoice.id %}">
+                                    View
+                                </a>
+                            </td>
+                        </tr>
+
+                    {% empty %}
+
+                        <tr>
+                            <td colspan="7">No invoices found for today.</td>
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- AI Analysis Section -->
+        <section class="analysis-card">
+
+            <h2>AI Invoice Analysis</h2>
+
+            <p>
+                Secure Trade AI helps identify suspicious import invoices,
+                price differences and possible fraud risks.
+            </p>
+
+            <a href="{% url 'upload_invoice' %}" class="analysis-btn">
+                Analyze Invoice
+            </a>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+
+</body>
+</html>

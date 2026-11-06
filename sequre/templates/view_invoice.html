@@ -1,0 +1,599 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Invoice History | Secure Trade AI</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #1e293b;
+            padding: 35px;
+        }
+
+        .container {
+            max-width: 1250px;
+            margin: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: #17365d;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            background: #17365d;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.04);
+            border: 1px solid #e2e8f0;
+        }
+
+        .stat-card p {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .stat-card h2 {
+            margin-top: 12px;
+            font-size: 27px;
+            color: #17365d;
+        }
+
+        .history-card {
+            background: white;
+            border-radius: 14px;
+            padding: 25px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.04);
+        }
+
+        .history-heading {
+            margin-bottom: 22px;
+        }
+
+        .history-heading h2 {
+            font-size: 20px;
+            color: #17365d;
+            margin-bottom: 7px;
+        }
+
+        .history-heading p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        /* SEARCH AND DATE FILTER */
+
+        .filter-form {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 22px 0;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 220px;
+            padding: 13px 15px;
+            border: 1px solid #dbe2ea;
+            border-radius: 8px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .search-input:focus {
+            border-color: #2563eb;
+        }
+
+        .date-select {
+            padding: 13px 15px;
+            border: 1px solid #dbe2ea;
+            border-radius: 8px;
+            background: white;
+            color: #334155;
+            min-width: 160px;
+            outline: none;
+        }
+
+        .apply-btn {
+            padding: 12px 22px;
+            border: none;
+            border-radius: 8px;
+            background: #17365d;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .apply-btn:hover {
+            background: #244d7a;
+        }
+
+        .clear-search {
+            padding: 12px;
+            color: #64748b;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .search-info {
+            color: #64748b;
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+
+        /* TABLE */
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 850px;
+        }
+
+        th {
+            text-align: left;
+            background: #f1f5f9;
+            color: #475569;
+            padding: 15px;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 17px 15px;
+            border-bottom: 1px solid #edf0f5;
+            font-size: 13px;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        .invoice-number {
+            font-weight: bold;
+            color: #17365d;
+        }
+
+        .status {
+            padding: 6px 11px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .clear {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .pending {
+            background: #fef3c7;
+            color: #a16207;
+        }
+
+        .on-hold {
+            background: #e0f2fe;
+            color: #0369a1;
+        }
+
+        .fraud {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .view-btn {
+            text-decoration: none;
+            color: #2563eb;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        /* EMPTY STATES */
+
+        .empty-state {
+            text-align: center;
+            padding: 65px 20px;
+        }
+
+        .empty-icon {
+            font-size: 55px;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h2 {
+            color: #17365d;
+            margin-bottom: 12px;
+            font-size: 22px;
+        }
+
+        .empty-state p {
+            color: #64748b;
+            line-height: 1.7;
+            font-size: 14px;
+            max-width: 430px;
+            margin: auto;
+        }
+
+        .upload-btn {
+            display: inline-block;
+            margin-top: 22px;
+            background: #17365d;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 45px 20px;
+        }
+
+        .no-results-icon {
+            font-size: 38px;
+            margin-bottom: 12px;
+        }
+
+        .no-results h3 {
+            color: #17365d;
+            margin-bottom: 8px;
+        }
+
+        .no-results p {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        @media(max-width: 1000px) {
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media(max-width: 600px) {
+            body {
+                padding: 16px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .history-card {
+                padding: 15px;
+            }
+
+            .filter-form {
+                flex-direction: column;
+            }
+
+            .search-input,
+            .date-select,
+            .apply-btn {
+                width: 100%;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+
+    <div class="header">
+        <div>
+            <h1>Invoice History</h1>
+            <p>View and manage all your previously uploaded invoices.</p>
+        </div>
+
+        <a href="{% url 'dashboard' %}" class="back-btn">
+            ← Dashboard
+        </a>
+    </div>
+
+
+    {% if total_invoices > 0 %}
+
+    <!-- STATISTICS -->
+
+    <div class="stats">
+
+        <div class="stat-card">
+            <p>Total Invoices</p>
+            <h2>{{ total_invoices }}</h2>
+        </div>
+
+        <div class="stat-card">
+            <p>Successfully Cleared</p>
+            <h2>{{ cleared_count }}</h2>
+        </div>
+
+        <div class="stat-card">
+            <p>Pending</p>
+            <h2>{{ pending_count }}</h2>
+        </div>
+
+        <div class="stat-card">
+            <p>On Hold</p>
+            <h2>{{ on_hold_count }}</h2>
+        </div>
+
+        <div class="stat-card">
+            <p>Fraud Detected</p>
+            <h2>{{ fraud_count }}</h2>
+        </div>
+
+    </div>
+
+
+    <!-- HISTORY -->
+
+    <div class="history-card">
+
+        <div class="history-heading">
+            <h2>All Invoice Records</h2>
+            <p>Your complete invoice history, including previous uploads.</p>
+        </div>
+
+
+        <!-- SEARCH AND DATE FILTER FORM -->
+
+        <form method="GET" class="filter-form">
+
+            <input
+                type="text"
+                name="q"
+                class="search-input"
+                placeholder="Search invoice number, seller or buyer..."
+                value="{{ search_query }}"
+            >
+
+            <select name="date" class="date-select">
+
+                <option value="all"
+                    {% if date_filter == 'all' %}selected{% endif %}>
+                    All Time
+                </option>
+
+                <option value="today"
+                    {% if date_filter == 'today' %}selected{% endif %}>
+                    Today
+                </option>
+
+                <option value="7days"
+                    {% if date_filter == '7days' %}selected{% endif %}>
+                    Last 7 Days
+                </option>
+
+                <option value="30days"
+                    {% if date_filter == '30days' %}selected{% endif %}>
+                    Last 30 Days
+                </option>
+
+            </select>
+
+            <button type="submit" class="apply-btn">
+                Apply Filters
+            </button>
+
+            {% if search_query or date_filter != 'all' %}
+                <a href="{% url 'view_invoice' %}"
+                   class="clear-search">
+                    Reset All ✕
+                </a>
+            {% endif %}
+
+        </form>
+
+
+        {% if search_query %}
+            <div class="search-info">
+                Search results for:
+                <strong>{{ search_query }}</strong>
+            </div>
+        {% endif %}
+
+
+        {% if date_filter != 'all' %}
+            <div class="search-info">
+                Date Filter:
+                <strong>
+                    {% if date_filter == 'today' %}
+                        Today
+                    {% elif date_filter == '7days' %}
+                        Last 7 Days
+                    {% elif date_filter == '30days' %}
+                        Last 30 Days
+                    {% endif %}
+                </strong>
+            </div>
+        {% endif %}
+
+
+        <!-- INVOICE TABLE -->
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Invoice Number</th>
+                        <th>Invoice Date</th>
+                        <th>Seller</th>
+                        <th>Buyer</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for invoice in view_invoice %}
+
+                    <tr>
+
+                        <td class="invoice-number">
+                            {{ invoice.invoice_number }}
+                        </td>
+
+                        <td>
+                            {{ invoice.invoice_date|default:"—" }}
+                        </td>
+
+                        <td>
+                            {{ invoice.seller_name|default:"—" }}
+                        </td>
+
+                        <td>
+                            {{ invoice.buyer_name|default:"—" }}
+                        </td>
+
+                        <td>
+                            {{ invoice.currency }}
+                            {{ invoice.total_amount }}
+                        </td>
+
+                        <td>
+
+                            <span class="status
+                                {% if invoice.status == 'clear' %}clear
+                                {% elif invoice.status == 'pending' %}pending
+                                {% elif invoice.status == 'on_hold' %}on-hold
+                                {% elif invoice.status == 'fraud' %}fraud
+                                {% endif %}">
+
+                                {{ invoice.get_status_display }}
+
+                            </span>
+
+                        </td>
+
+                        <td>
+                            <a
+                                href="{% url 'invoice_detail' invoice.id %}"
+                                class="view-btn">
+                                View Details →
+                            </a>
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+                        <td colspan="7">
+
+                            <div class="no-results">
+
+                                <div class="no-results-icon">
+                                    🔍
+                                </div>
+
+                                <h3>No Matching Invoices Found</h3>
+
+                                <p>
+                                    We couldn't find any invoice matching
+                                    your search or selected date range.
+                                    Try changing your filters.
+                                </p>
+
+                            </div>
+
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    {% else %}
+
+    <!-- FIRST TIME USER EMPTY STATE -->
+
+    <div class="history-card">
+
+        <div class="empty-state">
+
+            <div class="empty-icon">📂</div>
+
+            <h2>No Invoice History Yet</h2>
+
+            <p>
+                You haven't uploaded any invoices yet.
+                Once you upload your first invoice, all your
+                invoice records and analysis results will appear here.
+            </p>
+
+            <a href="{% url 'upload' %}" class="upload-btn">
+                + Upload Your First Invoice
+            </a>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>

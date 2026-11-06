@@ -1,0 +1,89 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Invoice Search | Secure Trade AI</title>
+
+    <link rel="stylesheet" href="{% static 'sequre/style.css' %}">
+</head>
+
+<body>
+
+<div class="main-content">
+
+    <section class="recent-section">
+
+        <div class="section-heading">
+            <h2>Invoice Search Results</h2>
+            <a href="{% url 'dashboard' %}">← Back to Dashboard</a>
+        </div>
+
+        <p>Search Invoice Number: <strong>{{ query }}</strong></p>
+
+        {% if invoices %}
+
+        <div class="table-container">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Invoice Number</th>
+                        <th>Seller</th>
+                        <th>Buyer</th>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for invoice in invoices %}
+                    <tr>
+                        <td>{{ invoice.invoice_number }}</td>
+                        <td>{{ invoice.seller_name }}</td>
+                        <td>{{ invoice.buyer_name }}</td>
+                        <td>{{ invoice.invoice_date }}</td>
+                        <td>{{ invoice.currency }} {{ invoice.total_amount }}</td>
+
+                        <td>
+                            <span class="status-badge status-{{ invoice.status }}">
+                                {{ invoice.get_status_display }}
+                            </span>
+                        </td>
+
+                        <td>
+                            <a class="view-btn"
+                               href="{% url 'invoice_detail' invoice.id %}">
+                                View
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <h3 style="color:#dc2626; margin-top:25px;">
+            Invoice Not Found!
+        </h3>
+
+        <p>No invoice matches this invoice number.</p>
+
+        {% endif %}
+
+    </section>
+
+</div>
+
+</body>
+</html>

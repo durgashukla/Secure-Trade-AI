@@ -1,0 +1,1013 @@
+
+/* =====================================================
+   SECURE TRADE AI - PROFESSIONAL RISK ANALYSIS
+===================================================== */
+
+/* GLOBAL */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #172554;
+    --primary-light: #263f79;
+    --accent: #4169e1;
+    --background: #f4f6fb;
+    --surface: #ffffff;
+    --border: #e6eaf1;
+    --text: #24324b;
+    --muted: #8490a5;
+    --success: #15965b;
+    --danger: #dc4444;
+    --warning: #d69b23;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+
+/* =====================================================
+   MAIN CONTAINER
+===================================================== */
+
+.testing-container {
+    width: 100%;
+    max-width: 1500px;
+    margin: auto;
+    padding: 35px 38px;
+}
+
+
+/* =====================================================
+   PAGE HEADER
+===================================================== */
+
+.testing-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 32px;
+}
+
+.page-eyebrow {
+    display: block;
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 750;
+    letter-spacing: 1.6px;
+    margin-bottom: 8px;
+}
+
+.testing-header h1 {
+    font-size: 29px;
+    font-weight: 750;
+    color: var(--primary);
+    letter-spacing: -0.6px;
+    margin-bottom: 5px;
+}
+
+.testing-header p {
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.header-tag {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 17px;
+    background: #e9efff;
+    border: 1px solid #dce5ff;
+    border-radius: 9px;
+    color: #3155bb;
+    font-size: 11px;
+    font-weight: 750;
+    letter-spacing: 0.7px;
+    white-space: nowrap;
+}
+
+.header-dot {
+    width: 8px;
+    height: 8px;
+    background: #4169e1;
+    border-radius: 50%;
+}
+
+
+/* =====================================================
+   COMMON SECTION DESIGN
+===================================================== */
+
+.analysis-section {
+    background: var(--surface);
+    padding: 30px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    margin-bottom: 25px;
+    box-shadow: 0 5px 20px rgba(25, 42, 80, 0.035);
+    transition: box-shadow 0.25s ease;
+}
+
+.analysis-section:hover {
+    box-shadow: 0 8px 25px rgba(25, 42, 80, 0.055);
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.section-label {
+    display: block;
+    color: #5271c5;
+    font-size: 10px;
+    font-weight: 750;
+    letter-spacing: 1.4px;
+    margin-bottom: 7px;
+}
+
+.section-heading h2 {
+    color: var(--primary);
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: -0.35px;
+    margin-bottom: 5px;
+}
+
+.section-heading p {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+
+/* =====================================================
+   SECTION 1 - INVOICE OVERVIEW
+===================================================== */
+
+.overview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 23px;
+}
+
+.overview-card {
+    min-width: 0;
+    padding: 23px;
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.card-heading {
+    margin-bottom: 20px;
+}
+
+.card-label {
+    display: block;
+    color: #8a96aa;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.1px;
+    margin-bottom: 5px;
+}
+
+.overview-card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+
+/* RISK CHART */
+
+.risk-chart {
+    min-height: 270px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    background: #f6f8fd;
+    border: 1px solid #edf0f6;
+    border-radius: 11px;
+}
+
+.risk-chart img {
+    display: block;
+    max-width: 100%;
+    max-height: 250px;
+    object-fit: contain;
+}
+
+.empty-state {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+
+/* INVOICE ITEMS */
+
+.invoice-item-list {
+    list-style: none;
+    max-height: 290px;
+    overflow-y: auto;
+}
+
+.invoice-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+    margin-bottom: 11px;
+    background: #f8faff;
+    border: 1px solid #e9edf5;
+    border-radius: 9px;
+    transition: 0.2s ease;
+}
+
+.invoice-item:hover {
+    background: #edf3ff;
+    border-color: #d6e2ff;
+    transform: translateX(3px);
+}
+
+.item-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.item-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 29px;
+    height: 29px;
+    background: #e8edff;
+    color: #3155bb;
+    border-radius: 7px;
+    font-size: 11px;
+    font-weight: 750;
+}
+
+.item-name {
+    color: #35445d;
+    font-size: 13px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.item-arrow {
+    color: #8497c4;
+    font-size: 18px;
+}
+
+.invoice-item-list > .empty-state {
+    padding: 15px;
+}
+
+
+/* =====================================================
+   SECTION 2 - RISK FINDINGS
+===================================================== */
+
+.risk-findings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.risk-finding-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 19px;
+    background: #fff8f7;
+    border: 1px solid #f6dddd;
+    border-left: 4px solid #e05252;
+    border-radius: 10px;
+    transition: 0.25s ease;
+}
+
+.risk-finding-card:hover {
+    background: #fff3f2;
+    transform: translateX(3px);
+    box-shadow: 0 4px 12px rgba(220, 68, 68, 0.06);
+}
+
+.risk-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 34px;
+    height: 34px;
+    background: #ffe5e5;
+    color: #d53d3d;
+    border-radius: 9px;
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.risk-finding-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.risk-finding-content h3 {
+    color: #ad3434;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.risk-finding-content p {
+    color: #68768b;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.risk-flag {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 12px;
+    background: #ffe5e5;
+    color: #c63b3b;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+    background: #dc4444;
+    border-radius: 50%;
+}
+
+.no-risk-message {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 17px;
+    background: #effaf3;
+    border: 1px solid #d6f0df;
+    border-radius: 9px;
+    color: #16834a;
+    font-size: 13px;
+}
+
+.success-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 27px;
+    height: 27px;
+    background: #d9f4e3;
+    border-radius: 50%;
+    font-weight: 800;
+}
+
+
+/* =====================================================
+   OFFICER VERIFICATION
+===================================================== */
+
+.verification-heading {
+    margin-top: 32px;
+    margin-bottom: 18px;
+    padding-top: 27px;
+    border-top: 1px solid var(--border);
+}
+
+.verification-heading h3 {
+    color: var(--primary);
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.verification-heading p {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.verification-list {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.verification-card {
+    padding: 20px;
+    background: #f8faff;
+    border: 1px solid #e7edf7;
+    border-radius: 10px;
+    transition: 0.2s ease;
+}
+
+.verification-card:hover {
+    border-color: #cbd8f5;
+    background: #f5f8ff;
+}
+
+.verification-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 13px;
+}
+
+.verification-card h4 {
+    color: #263957;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.verification-status {
+    display: inline-block;
+    padding: 6px 11px;
+    background: #fff2d7;
+    color: #a86b00;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.verification-details p {
+    color: #68768b;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.verification-details strong {
+    color: #43536d;
+}
+
+
+/* =====================================================
+   SECTION 3 - HS CODE & DUTY TABLE
+===================================================== */
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+
+.assessment-table {
+    width: 100%;
+    min-width: 650px;
+    border-collapse: collapse;
+}
+
+.assessment-table th {
+    padding: 17px 19px;
+    background: #f2f5fb;
+    color: #40516c;
+    font-size: 12px;
+    font-weight: 750;
+    text-align: left;
+    border-bottom: 1px solid #e4e9f2;
+    white-space: nowrap;
+}
+
+.assessment-table td {
+    padding: 17px 19px;
+    color: #596981;
+    font-size: 13px;
+    border-bottom: 1px solid #edf0f5;
+}
+
+.assessment-table tbody tr {
+    transition: background 0.2s ease;
+}
+
+.assessment-table tbody tr:hover {
+    background: #f7f9fe;
+}
+
+.assessment-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.assessment-table td.product-name {
+    color: #273956;
+    font-weight: 650;
+}
+
+.hs-code {
+    display: inline-block;
+    padding: 5px 9px;
+    background: #eef2ff;
+    color: #3957ad;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 650;
+}
+
+.assessment-table td.duty-value {
+    color: #12804c;
+    font-weight: 750;
+}
+
+.missing-value {
+    color: #d34c4c;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.empty-table {
+    text-align: center;
+    color: var(--muted) !important;
+}
+
+
+/* =====================================================
+   SECTION 4 - FINAL DUTY ASSESSMENT
+===================================================== */
+
+.final-duty-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+    min-height: 185px;
+    padding: 32px;
+    color: white;
+    background: linear-gradient(
+        115deg,
+        #142451 0%,
+        #203b76 65%,
+        #304f91 100%
+    );
+    border-radius: 13px;
+    box-shadow: 0 8px 20px rgba(23, 37, 84, 0.14);
+}
+
+.duty-card-content {
+    position: relative;
+    z-index: 1;
+}
+
+.duty-card-label {
+    display: block;
+    color: #d4def5;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.final-duty-card h2 {
+    font-size: 37px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 9px;
+}
+
+.final-duty-card p {
+    color: #cbd7f0;
+    font-size: 13px;
+}
+
+.duty-card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 85px;
+    height: 85px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 50%;
+    color: #ffffff;
+    font-size: 38px;
+    font-weight: 700;
+}
+
+
+/* =====================================================
+   SECTION 5 - OFFICER DECISION
+===================================================== */
+
+.decision-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+    flex-wrap: wrap;
+    padding: 23px;
+    background: #f8faff;
+    border: 1px solid #e8edf5;
+    border-radius: 11px;
+}
+
+.current-status {
+    min-width: 150px;
+}
+
+.status-label {
+    display: block;
+    color: #8490a5;
+    font-size: 10px;
+    font-weight: 750;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.current-status h3 {
+    color: var(--primary);
+    font-size: 20px;
+    font-weight: 750;
+}
+
+.decision-buttons {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    flex-wrap: wrap;
+}
+
+.decision-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-width: 105px;
+    border: none;
+    padding: 12px 17px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    transition: all 0.22s ease;
+}
+
+.decision-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 12px rgba(20, 35, 70, 0.15);
+    filter: brightness(1.06);
+}
+
+.decision-btn:active {
+    transform: translateY(0);
+}
+
+.decision-btn:focus-visible {
+    outline: 3px solid #a9bdf5;
+    outline-offset: 3px;
+}
+
+.clear-btn {
+    background: #15965b;
+}
+
+.pending-btn {
+    background: #d69b23;
+}
+
+.hold-btn {
+    background: #64748b;
+}
+
+.fraud-btn {
+    background: #dc4444;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.testing-footer {
+    text-align: center;
+    padding: 15px 10px;
+    color: #929db0;
+    font-size: 11px;
+}
+
+.testing-footer span {
+    margin: 0 5px;
+    color: #4169e1;
+}
+
+
+/* =====================================================
+   CUSTOM SCROLLBAR
+===================================================== */
+
+.invoice-item-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+.invoice-item-list::-webkit-scrollbar-thumb {
+    background: #cbd5e5;
+    border-radius: 10px;
+}
+
+
+/* =====================================================
+   RESPONSIVE DESIGN - TABLETS
+===================================================== */
+
+@media (max-width: 950px) {
+
+    .testing-container {
+        padding: 25px 20px;
+    }
+
+    .analysis-section {
+        padding: 24px;
+    }
+
+    .overview-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .decision-container {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+}
+
+
+/* =====================================================
+   RESPONSIVE DESIGN - MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+    .testing-container {
+        padding: 15px 11px;
+    }
+
+    .testing-header {
+        align-items: flex-start;
+        flex-direction: column;
+        margin-bottom: 23px;
+    }
+
+    .testing-header h1 {
+        font-size: 24px;
+    }
+
+    .analysis-section {
+        padding: 18px 14px;
+        margin-bottom: 17px;
+        border-radius: 11px;
+    }
+
+    .section-heading h2 {
+        font-size: 18px;
+    }
+
+    .overview-card {
+        padding: 16px;
+    }
+
+    .risk-chart {
+        min-height: 210px;
+    }
+
+    .risk-chart img {
+        max-height: 195px;
+    }
+
+    .risk-finding-card {
+        align-items: flex-start;
+        flex-wrap: wrap;
+        padding: 15px;
+    }
+
+    .risk-flag {
+        margin-left: 49px;
+    }
+
+    .verification-card {
+        padding: 15px;
+    }
+
+    .verification-card-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .final-duty-card {
+        min-height: 155px;
+        padding: 22px 17px;
+    }
+
+    .final-duty-card h2 {
+        font-size: 28px;
+    }
+
+    .duty-card-icon {
+        width: 57px;
+        height: 57px;
+        font-size: 27px;
+    }
+
+    .decision-container {
+        padding: 17px;
+    }
+
+    .decision-buttons {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .decision-btn {
+        width: 100%;
+        min-width: 0;
+        padding: 12px 8px;
+    }
+
+}
+
+/* PRODUCT DETAILS INFORMATION */
+
+.product-details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.product-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding: 14px;
+    background: #f7f9fd;
+    border: 1px solid #e8edf5;
+    border-radius: 9px;
+    min-width: 0;
+}
+
+.product-detail span {
+    font-size: 11px;
+    color: #8490a5;
+    font-weight: 600;
+}
+
+.product-detail strong {
+    font-size: 13px;
+    color: #172554;
+    overflow-wrap: anywhere;
+}
+
+.invoice-products-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 13px;
+    padding-top: 17px;
+    border-top: 1px solid #e8edf5;
+}
+
+.invoice-products-heading h4 {
+    font-size: 14px;
+    color: #172554;
+}
+
+.invoice-products-heading span {
+    font-size: 11px;
+    color: #4169e1;
+    font-weight: 650;
+}
+
+@media (max-width: 550px) {
+    .product-details-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* =====================================================
+   CLEARANCE CERTIFICATE DOWNLOAD SECTION
+===================================================== */
+
+.certificate-download {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 22px;
+    margin-top: 22px;
+    padding: 25px;
+    background: linear-gradient(120deg, #effaf3, #f8fcf9);
+    border: 1px solid #d5ecdd;
+    border-left: 4px solid #15965b;
+    border-radius: 12px;
+    box-shadow: 0 5px 18px rgba(21, 150, 91, 0.06);
+    transition: all 0.25s ease;
+}
+
+.certificate-download:hover {
+    box-shadow: 0 8px 22px rgba(21, 150, 91, 0.10);
+}
+
+.certificate-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex: 1;
+    min-width: 220px;
+}
+
+.certificate-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 48px;
+    height: 48px;
+    background: #d9f3e3;
+    border-radius: 11px;
+    font-size: 23px;
+}
+
+.certificate-info h3 {
+    color: #176b43;
+    font-size: 16px;
+    font-weight: 750;
+    margin-bottom: 5px;
+}
+
+.certificate-info p {
+    color: #718477;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.download-certificate-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding: 13px 19px;
+    background: #15965b;
+    color: #ffffff;
+    border: 1px solid #15965b;
+    border-radius: 8px;
+    text-decoration: none;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 750;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.download-certificate-btn:hover {
+    background: #107a49;
+    border-color: #107a49;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 13px rgba(21, 150, 91, 0.20);
+}
+
+.download-certificate-btn:focus-visible {
+    outline: 3px solid #a8d8ba;
+    outline-offset: 3px;
+}
+
+@media (max-width: 700px) {
+
+    .certificate-download {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 19px;
+    }
+
+    .certificate-info {
+        min-width: 0;
+    }
+
+    .download-certificate-btn {
+        width: 100%;
+        white-space: normal;
+        text-align: center;
+    }
+}
+

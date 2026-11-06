@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account | Secure Trade AI</title>
+
+    <link rel="stylesheet" href="{% static 'sequre/register.css' %}">
+</head>
+
+<body>
+
+<div class="auth-container">
+
+    <!-- LEFT BRANDING SECTION -->
+    <div class="brand-section">
+
+        <div class="brand-logo">
+            <span class="logo-icon">🛡</span>
+            <h2>Secure Trade <span>AI</span></h2>
+        </div>
+
+        <div class="brand-content">
+            <h1>Start Your Journey<br>
+                With <span>Secure Trade AI</span>
+            </h1>
+
+            <p>
+                Intelligent customs verification,
+                invoice analysis and secure international trade.
+            </p>
+
+            <div class="brand-features">
+                <div>✓ AI-Powered Invoice Analysis</div>
+                <div>✓ Smart Customs Risk Detection</div>
+                <div>✓ Automated Duty Assessment</div>
+            </div>
+        </div>
+
+        <div class="brand-footer">
+            © 2026 Secure Trade AI. All Rights Reserved.
+        </div>
+
+    </div>
+
+
+    <!-- RIGHT REGISTER SECTION -->
+    <div class="form-section">
+
+        <div class="register-box">
+
+            <div class="form-heading">
+                <h1>Create Account</h1>
+                <p>Register to access your Secure Trade AI dashboard.</p>
+            </div>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                {% if form.errors %}
+                    <div class="error-message">
+                        Please check your details and try again.
+                        {{ form.errors }}
+                    </div>
+                {% endif %}
+
+                <div class="input-group">
+                    <label>Username</label>
+                    {{ form.username }}
+                </div>
+
+                <div class="input-group">
+                    <label>Password</label>
+                    {{ form.password1 }}
+                </div>
+
+                <div class="input-group">
+                    <label>Confirm Password</label>
+                    {{ form.password2 }}
+                </div>
+
+                <button type="submit" class="register-btn">
+                    Create Account →
+                </button>
+
+            </form>
+
+            <div class="login-link">
+                Already have an account?
+                <a href="{% url 'login' %}">Login Here</a>
+            </div>
+
+            <div class="security-note">
+                🔒 Your account information is protected.
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

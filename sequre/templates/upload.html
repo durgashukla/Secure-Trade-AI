@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Secure Trade AI | Upload Invoice</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+        }
+
+        .container {
+            background: white;
+            width: 100%;
+            max-width: 650px;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+        }
+
+        /* HEADER */
+
+        .top-bar {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 22px;
+        }
+
+        .dashboard-btn {
+            text-decoration: none;
+            background: #17365d;
+            color: white;
+            padding: 11px 17px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .dashboard-btn:hover {
+            background: #244d7a;
+            transform: translateY(-2px);
+        }
+
+        h1 {
+            color: #142d4e;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+
+        .upload-box {
+            border: 2px dashed #94a3b8;
+            border-radius: 12px;
+            padding: 30px 20px;
+            text-align: center;
+            background: #f8fafc;
+            margin-bottom: 20px;
+        }
+
+        .upload-box h3 {
+            color: #1e3a5f;
+            margin-bottom: 12px;
+        }
+
+        input[type="file"] {
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #1d4ed8;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #1e40af;
+        }
+
+        .message {
+            background: #dcfce7;
+            color: #166534;
+            padding: 13px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 13px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .result-box {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 10px;
+            overflow-wrap: anywhere;
+        }
+
+        h2 {
+            color: #142d4e;
+            margin-bottom: 12px;
+            font-size: 19px;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            font-size: 13px;
+            color: #334155;
+        }
+
+        .formats {
+            color: #64748b;
+            font-size: 13px;
+            margin-top: 15px;
+        }
+
+        @media(max-width: 600px) {
+            .container {
+                padding: 22px;
+            }
+
+            .dashboard-btn {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- DASHBOARD BUTTON -->
+
+    <div class="top-bar">
+        <a href="{% url 'dashboard' %}" class="dashboard-btn">
+            ← Back to Dashboard
+        </a>
+    </div>
+
+    <h1>Secure Trade AI</h1>
+
+    <p class="subtitle">
+        Upload your invoice for AI-powered customs analysis.
+    </p>
+
+    <form method="POST" enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+        <div class="upload-box">
+
+            <h3>Upload Your Invoice</h3>
+
+            <p>Select PDF, Image or JSON file</p>
+
+            <input
+                type="file"
+                name="invoice"
+                accept=".pdf,.png,.jpg,.jpeg,.webp,.json,application/pdf,image/*,application/json"
+                required
+            >
+
+            <p class="formats">
+                Supported formats: PDF, JPG, PNG, WEBP, JSON
+            </p>
+
+        </div>
+
+        <button type="submit">
+            Upload & Analyze Invoice
+        </button>
+
+    </form>
+
+    {% if message %}
+        <div class="message">
+            {{ message }}
+        </div>
+    {% endif %}
+
+    {% if error %}
+        <div class="error">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    {% if result %}
+
+        <div class="result-box">
+
+            <h2>Invoice Extracted Data</h2>
+
+            <pre>{{ result }}</pre>
+
+        </div>
+
+        <div class="result-box">
+
+            <h2>Automatic Testing Results</h2>
+
+            <pre>{{ anomalies }}</pre>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>
