@@ -1,5 +1,5 @@
 
-# Secure Trade AI
+# Secure Trade 
 
 An AI-powered Customs Compliance and Invoice Risk Analysis System built using Python and Django.
 
